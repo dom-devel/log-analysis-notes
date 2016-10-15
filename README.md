@@ -44,6 +44,6 @@ The bash script then calls a python script which  will process the logs in pytho
 
 The python script also creates the BQ schema needed for uploading to BigQuery from the python dictionary that is created. This is saved to a text file for the bash script to access.
 
-When the python script is done, the bash file then uploads the processed logs to Google Cloud Storage using [gsutil](https://cloud.google.com/storage/docs/gsutil) before uploading them into BigQuery with (bq)[https://cloud.google.com/bigquery/bq-command-line-tool].
+When the python script is done, the bash file then uploads the processed logs to Google Cloud Storage using [gsutil](https://cloud.google.com/storage/docs/gsutil) before uploading them into BigQuery with [bq](https://cloud.google.com/bigquery/bq-command-line-tool).
 
 
