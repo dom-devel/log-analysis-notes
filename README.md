@@ -32,5 +32,18 @@ In this case we can do an ASN lookup to discover the owner of that particular IP
 In python we used the DNS module to perform the reverse and forward DNS lookups and the cymruwhois module to perform ASN lookups and discover the owner of the IP.
 
 ##How best to go about doing this?
+The following is a rough spec of how my own code works.
 
-The rough code that I have hacked together use
+A bash script works with the log files one by one, either selecting them from a folder or downloading from an S3 bucket.
+
+Grep or zgrep is used to the filter logs down to the bots I'm interested in. For Googlebot for example the following regex will catch 99.9% of Googlebot:
+
+zgrep -i -E "googlebot|mediapartners-google|adsbot-google"
+
+The bash script then calls a python script which  will process the logs in python and output them as a CSV file. As the logs are being processed line by line, all the checked and validated Googlebot IPs are saved to a standalone file to avoid having to recheck later. Everytime the python script runs it checks the IP for each log line against the IPs in the standalone file to avoid having to perform an extra lookup as these are time consuming.
+
+The python script also creates the BQ schema needed for uploading to BigQuery from the python dictionary that is created. This is saved to a text file for the bash script to access.
+
+When the python script is done, the bash file then uploads the processed logs to Google Cloud Storage using gsutil before uploading them into BigQuery with bq.
+
+
