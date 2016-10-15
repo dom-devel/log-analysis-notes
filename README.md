@@ -34,7 +34,7 @@ In python we used the DNS module to perform the reverse and forward DNS lookups 
 ##How best to go about doing this?
 The following is a rough spec of how my own code works.
 
-A bash script works with the log files one by one, either selecting them from a folder or downloading from an S3 bucket.
+A bash script works with the log files one by one, either selecting them from a folder or downloading from an S3 bucket. (Working with them 1 by 1 was a decision made because the server I run this on is a 1GB VPS, with not enough storage or processing power to run in parallel or store an entire set of log files if the client has a particularly large website.)
 
 Grep or zgrep is used to the filter logs down to the bots I'm interested in. For Googlebot for example the following regex will catch 99.9% of Googlebot:
 
